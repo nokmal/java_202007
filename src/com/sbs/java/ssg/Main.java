@@ -55,7 +55,11 @@ public class Main {
 					
 					System.out.printf("%d  | %s\n" , article.id, article.title);
 				}
-				
+			}
+			else if (command.startsWith("article detail")) {
+				String[] commandBits = command.split(" ");
+				int id = Integer.parseInt(commandBits[2]);
+				System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);				
 			}
 			else {
 				System.out.printf("%s은(는) 존재하지 않는 명령어입니다.\n", command);
