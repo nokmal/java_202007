@@ -60,20 +60,18 @@ public class Main {
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]);
 				
-				boolean found = false; 
 				Article foundArticle = null; //찾은 게시글의 정보 저장을 위한 변수
 				
 				for (int i = 0 ; i < articles.size(); i++) {
 					Article article = articles.get(i);
 					
 					if ( article.id == id ) {
-						found = true;
 						foundArticle = article; //게시글을 찾았을 때 사용하기 위한 재설정
 						break; 
 					}
 				}
 				
-				if (found == false) {
+				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
 					continue;
 				}
