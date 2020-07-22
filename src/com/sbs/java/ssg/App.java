@@ -86,24 +86,25 @@ public class App {
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]);
 				
-				Article foundArticle = null; //찾은 게시글의 정보 저장을 위한 변수
+				int foundIndex = -1; // 게시물 삭제 시 index를 찾기 위해 변수 생성
 				
 				for (int i = 0 ; i < articles.size(); i++) {
 					Article article = articles.get(i);
 					
 					if ( article.id == id ) {
-						foundArticle = article; //게시글을 찾았을 때 사용하기 위한 재설정
+						
+						foundIndex = i;
 						break; 
 					}
 				}
 				
-				if (foundArticle == null) {
-					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+				if (foundIndex == -1) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id+1);
 					continue;
 				}
 				
-					articles.remove(id -1);
-					System.out.printf("- %d번 게시물 삭제 -\n", id);
+					articles.remove(foundIndex);
+					System.out.printf("- %d번 게시물 삭제 -\n", foundIndex+1);
 			}
 			
 			else {
