@@ -81,6 +81,32 @@ public class App {
 					System.out.printf("제목 : %s\n", foundArticle.title);
 					System.out.printf("내용 : %s\n", foundArticle.body);				
 			}
+			
+			else if (command.startsWith("article delete")) {
+				String[] commandBits = command.split(" ");
+				int id = Integer.parseInt(commandBits[2]);
+				
+				int foundIndex = -1; // 게시물 삭제 시 index를 찾기 위해 변수 생성
+				
+				for (int i = 0 ; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					
+					if ( article.id == id ) {
+						
+						foundIndex = i;
+						break; 
+					}
+				}
+				
+				if (foundIndex == -1) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id+1);
+					continue;
+				}
+				
+					articles.remove(foundIndex);
+					System.out.printf("- %d번 게시물 삭제 -\n", foundIndex+1);
+			}
+			
 			else {
 				System.out.printf("%s은(는) 존재하지 않는 명령어입니다.\n", command);
 			}
