@@ -49,11 +49,11 @@ public class App {
 					System.out.println("게시물이 없습니다.");
 					continue;
 				}
-				System.out.println("번호 | 제목");
+				System.out.printf("    번호   |  조회   | 제목\n");
 				for (int i = articles.size() - 1 ; i >= 0 ; i--) {
 					Article article = articles.get(i);
 					
-					System.out.printf("%d  | %s\n" , article.id, article.title);
+					System.out.printf("%4d  |%4d  | %s\n" , article.id, article.hit, article.title);
 				}
 			}
 			else if (command.startsWith("article detail")) {
