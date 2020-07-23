@@ -76,10 +76,13 @@ public class App {
 					continue;
 				}
 				
-					System.out.printf("번호 : %d\n", foundArticle.id);
-					System.out.printf("날짜 : %s\n", foundArticle.regData);
-					System.out.printf("제목 : %s\n", foundArticle.title);
-					System.out.printf("내용 : %s\n", foundArticle.body);				
+				foundArticle.increaseHit();
+				
+				System.out.printf("번호 : %d\n", foundArticle.id);
+				System.out.printf("날짜 : %s\n", foundArticle.regData);
+				System.out.printf("제목 : %s\n", foundArticle.title);
+				System.out.printf("내용 : %s\n", foundArticle.body);
+				System.out.printf("조회 : %d\n", foundArticle.hit);
 			}
 			
 			else if (command.startsWith("article modify")) {
@@ -157,11 +160,18 @@ class Article {
 	String title;
 	String body;
 	String regData;
+	int hit;
 	
 	public Article(int id, String regData, String title, String body) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.regData = regData;
+		this.hit = 0 ;
+	}
+	
+	public void increaseHit() {
+	hit++;
 	}
 }
+
