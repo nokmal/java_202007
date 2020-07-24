@@ -3,11 +3,13 @@ package com.sbs.java.ssg;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import com.sbs.java.ssg.util.Util;
+import com.sbs.java.ssg.dto.Article;
 
 public class App {
-	private static List<Article> articles;
+	private List<Article> articles;
 	
-	static {
+	public App() {
 		articles = new ArrayList<>();
 	}
 	
@@ -165,30 +167,6 @@ public class App {
 		articles.add(new Article(1, Util.getNowDateStr(), "제목1", "내용1", 3));
 		articles.add(new Article(2, Util.getNowDateStr(), "제목2", "내용2", 12));
 		articles.add(new Article(3, Util.getNowDateStr(), "제목3", "내용3", 7));
-	}
-}
-
-class Article {
-	int id;
-	String title;
-	String body;
-	String regDate;
-	int hit;
-	
-	public Article(int id, String regDate, String title, String body) {
-		this(id, regDate, title, body, 0);
-	}
-	
-	public Article(int id, String regDate, String title, String body, int hit) {
-		this.id = id;
-		this.title = title;
-		this.body = body;
-		this.regDate = regDate;
-		this.hit = hit ;
-	}
-	
-	public void increaseHit() {
-	hit++;
 	}
 }
 
