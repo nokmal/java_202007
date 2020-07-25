@@ -1,10 +1,8 @@
 package com.sbs.java.ssg.dto;
 
-public class Article {
-	public int id;
+public class Article extends Dto {
 	public String title;
 	public String body;
-	public String regDate;
 	public int hit;
 	
 	public Article(int id, String regDate, String title, String body) {
@@ -13,9 +11,9 @@ public class Article {
 	
 	public Article(int id, String regDate, String title, String body, int hit) {
 		this.id = id;
+		this.regDate = regDate;
 		this.title = title;
 		this.body = body;
-		this.regDate = regDate;
 		this.hit = hit ;
 	}
 	

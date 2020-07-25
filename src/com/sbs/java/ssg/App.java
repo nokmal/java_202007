@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Scanner;
 import com.sbs.java.ssg.util.Util;
 import com.sbs.java.ssg.dto.Article;
+import com.sbs.java.ssg.dto.Member;
 
 public class App {
 	private List<Article> articles;
+	private List<Member> members;
 	
 	public App() {
 		articles = new ArrayList<>();
+		members = new ArrayList<>();
 	}
 	
 	public void start() {
@@ -142,6 +145,25 @@ public class App {
 				
 					articles.remove(foundIndex);
 					System.out.printf("- %d번 게시물 삭제 -\n", foundIndex+1);
+			}
+			
+			if (command.equals("member join")) {
+				int id = members.size() + 1;
+				
+				String regDate = Util.getNowDateStr();
+				
+				System.out.println("회원가입을 시작합니다.");
+				System.out.printf("로그인 아이디: ");
+				String loginId = sc.nextLine();
+				System.out.printf("로그인 비밀번호 : ");
+				String loginPw = sc.nextLine();
+				System.out.printf("이름 : ");
+				String name = sc.nextLine();
+				
+				Member member = new Member(id, regDate, loginId, loginPw, name);
+				members.add(member);
+				
+				System.out.printf("%s님이 가입하였습니다.\n", name);
 			}
 			
 			else {
