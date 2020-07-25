@@ -68,16 +68,7 @@ public class App {
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]);
 				
-				Article foundArticle = null; //찾은 게시글의 정보 저장을 위한 변수
-				
-				for (int i = 0 ; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					
-					if ( article.id == id ) {
-						foundArticle = article; //게시글을 찾았을 때 사용하기 위한 재설정
-						break; 
-					}
-				}
+				Article foundArticle = getArticleById(id);
 				
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -97,17 +88,7 @@ public class App {
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]);
 				
-				Article foundArticle = null;
-				
-				for (int i = 0 ; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					
-					if ( article.id == id ) {
-						foundArticle = article;
-						break; 
-					}
-					
-				}
+				Article foundArticle = getArticleById(id);
 				
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -132,17 +113,7 @@ public class App {
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]);
 				
-				int foundIndex = -1; // 게시물 삭제 시 index를 찾기 위해 변수 생성
-				
-				for (int i = 0 ; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					
-					if ( article.id == id ) {
-						
-						foundIndex = i;
-						break; 
-					}
-				}
+				int foundIndex = getArticleIndexById(id);
 				
 				if (foundIndex == -1) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id+1);
@@ -160,6 +131,26 @@ public class App {
 		sc.close();
 		System.out.println("== 프로그램 종료 ==");
 		
+	}
+
+	private int getArticleIndexById(int id) {
+		int i = 0;
+		for (Article article : articles) {
+			if ( article.id == id ) {
+				return i;
+			}
+			i++;
+		}
+		return -1;
+	}
+
+	private Article getArticleById(int id) {
+		int index = getArticleIndexById(id);
+		
+		if (index != -1) {
+			return articles.get(index);
+		}
+		return null;
 	}
 
 	private void makeTestData() {
