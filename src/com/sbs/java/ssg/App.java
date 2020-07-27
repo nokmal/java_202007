@@ -3,9 +3,12 @@ package com.sbs.java.ssg;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import com.sbs.java.ssg.util.Util;
+
+import com.sbs.java.ssg.controller.ArticleController;
+import com.sbs.java.ssg.controller.MemberController;
 import com.sbs.java.ssg.dto.Article;
 import com.sbs.java.ssg.dto.Member;
+import com.sbs.java.ssg.util.Util;
 
 public class App {
 	private List<Article> articles;
@@ -24,6 +27,9 @@ public class App {
 		makeTestData();
 				
 		Scanner sc = new Scanner(System.in);
+		
+		MemberController memberController = new MemberController(sc, members);
+		ArticleController articleController = new ArticleController();
 		
 		while (true) {
 			System.out.printf("명령어를 입력해주세요:");
@@ -76,7 +82,6 @@ public class App {
 						else if (article.title.contains(searchKeyword)) {
 							forListArticles.add(article);
 						}
-
 					}
 				}
 
@@ -148,32 +153,18 @@ public class App {
 			}
 			
 			if (command.equals("member join")) {
-				int id = members.size() + 1;
-				
-				String regDate = Util.getNowDateStr();
-				
-				System.out.println("회원가입을 시작합니다.");
-				System.out.printf("로그인 아이디: ");
-				String loginId = sc.nextLine();
-				System.out.printf("로그인 비밀번호 : ");
-				String loginPw = sc.nextLine();
-				System.out.printf("이름 : ");
-				String name = sc.nextLine();
-				
-				Member member = new Member(id, regDate, loginId, loginPw, name);
-				members.add(member);
-				
-				System.out.printf("%s님이 가입하였습니다.\n", name);
+				memberController.doJoin();
 			}
-			
+
 			else {
 				System.out.printf("%s은(는) 존재하지 않는 명령어입니다.\n", command);
 			}
 		}
+
 		sc.close();
 		System.out.println("== 프로그램 종료 ==");
 		
-	}
+}
 
 	private int getArticleIndexById(int id) {
 		int i = 0;
