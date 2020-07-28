@@ -73,10 +73,15 @@ public class App {
 }
 
 	private void makeTestData() {
-		System.out.println("테스트를 위한 데이터를 생성합니다.");
+		System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
 		articles.add(new Article(1, Util.getNowDateStr(), "제목1", "내용1", 3));
 		articles.add(new Article(2, Util.getNowDateStr(), "제목2", "내용2", 12));
 		articles.add(new Article(3, Util.getNowDateStr(), "제목3", "내용3", 7));
+		
+		System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
+		members.add(new Member(1, Util.getNowDateStr(), "admin", "admin", "관리자"));
+		members.add(new Member(2, Util.getNowDateStr(), "user1", "user1", "유저1"));
+		members.add(new Member(3, Util.getNowDateStr(), "user2", "user2", "유저2"));
 	}
 }
 
