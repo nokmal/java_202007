@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.sbs.java.ssg.controller.ArticleController;
+import com.sbs.java.ssg.controller.Controller;
 import com.sbs.java.ssg.controller.MemberController;
 import com.sbs.java.ssg.dto.Article;
 import com.sbs.java.ssg.dto.Member;
@@ -23,14 +24,14 @@ public class App {
 		System.out.println("== 프로그램 시작 ==");
 		String command;
 		
-		
 		makeTestData();
 				
 		Scanner sc = new Scanner(System.in);
-		
+				
 		MemberController memberController = new MemberController(sc, members);
 		ArticleController articleController = new ArticleController(sc, articles);
 		
+			
 		while (true) {
 			System.out.printf("명령어를 입력해주세요:");
 			command = sc.nextLine();
@@ -43,27 +44,28 @@ public class App {
 			if (command.equals("system out")) {
 				break;
 			}
-			if (command.equals("article write")) {
-				articleController.doWrite();
+			
+			String[] commandBits = command.split((" "));
+			
+			if ( commandBits.length == 1 ) {
+				System.out.println("존재하지 않는 명령어입니다.");
+				continue;
 			}
-			else if (command.startsWith("article list")) {
-				articleController.showList(command);
+			
+			String controllerName = commandBits[0];
+			String actionMethodName = commandBits[1];
+			
+			Controller controller = null;
+			
+			if ( controllerName.equals("article")) {
+				controller = articleController;
 			}
-			else if (command.startsWith("article detail")) {
-				articleController.showDetail(command);
+			else if ( controllerName.equals("member")) {
+				controller = memberController;
 			}
-			else if (command.startsWith("article modify")) {
-				articleController.doModify(command);
-			}
-			else if (command.startsWith("article delete")) {
-				articleController.doDelete(command);
-			}
-			else if (command.equals("member join")) {
-				memberController.doJoin();
-			}
-			else {
-				System.out.printf("%s은(는) 존재하지 않는 명령어입니다.\n", command);
-			}
+			
+			controller.doAction(command, actionMethodName);
+			
 		}
 
 		sc.close();
