@@ -39,12 +39,58 @@ public class MemberController extends Controller {
 		case "login" :
 			doLogin();
 			break;
+		case "logout" :
+			doLogout();
+			break;
 		default: 
 			System.out.println("존재하지 않는 명령어입니다.");
 			break;
 		}
 	}
+
+	private boolean isLogined() {
+		return loginedMember != null;
+	}
+
+
+	private void doLogin() {
+		if ( isLogined() == true ) {
+			System.out.println("이미 로그인되어 있습니다.");
+			return;
+		}
+		
+		System.out.printf("로그인 아이디: ");
+		String loginId = sc.nextLine();
+		
+		Member member = getMemberByLoginId(loginId);
+		
+		if ( member == null ) {
+			System.out.println("해당 회원은 존재하지 않습니다.");
+			return;
+		}
+		
+		System.out.printf("로그인 비밀번호 : ");
+		String loginPw = sc.nextLine();
+				
+		if ( member.loginPw.equals(loginPw) == false ) {
+			System.out.println("비밀번호를 확인해주세요.");
+			return;
+		}
+		
+		loginedMember = member;
+		System.out.printf("%s님이 로그인하였습니다.\n", member.name);
+	}
 	
+	private void doLogout() {
+		if ( isLogined() == false ) {
+			System.out.println("로그인 상태가 아닙니다.");
+			return;
+		}		
+		
+		loginedMember = null;
+		System.out.println("로그아웃 되었습니다.");
+	}
+
 	private void doJoin() {
 		int id = members.size() + 1;
 		String loginId = null;
@@ -92,29 +138,6 @@ public class MemberController extends Controller {
 		System.out.printf("%s님이 가입하였습니다.\n", name);
 	}
 
-
-	private void doLogin() {
-		System.out.printf("로그인 아이디: ");
-		String loginId = sc.nextLine();
-		
-		Member member = getMemberByLoginId(loginId);
-		
-		if ( member == null ) {
-			System.out.println("해당 회원은 존재하지 않습니다.");
-			return;
-		}
-		
-		System.out.printf("로그인 비밀번호 : ");
-		String loginPw = sc.nextLine();
-				
-		if ( member.loginPw.equals(loginPw) == false ) {
-			System.out.println("비밀번호를 확인해주세요.");
-			return;
-		}
-		
-		System.out.printf("%s님이 로그인하였습니다.\n", member.name);
-	}
-	
 	private Member getMemberByLoginId(String loginId) {
 		int index = getMemberIndexByLoginId(loginId);
 		
