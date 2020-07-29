@@ -1,5 +1,6 @@
 package com.sbs.java.ssg.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +13,20 @@ public class MemberController extends Controller {
 	private String command;
 	private String actionMethodName;
 	private Member loginedMember;
+
+	public MemberController(Scanner sc) {
+		this.sc = sc;
+		this.members = members;
+		
+		members = new ArrayList<Member>();
+	}
+	
+	public void makeTestData() {
+		System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
+		members.add(new Member(1, Util.getNowDateStr(), "admin", "admin", "관리자"));
+		members.add(new Member(2, Util.getNowDateStr(), "user1", "user1", "유저1"));
+		members.add(new Member(3, Util.getNowDateStr(), "user2", "user2", "유저2"));
+	}
 	
 	public void doAction(String command, String actionMethodName) {
 		this.command = command;
@@ -29,13 +44,8 @@ public class MemberController extends Controller {
 			break;
 		}
 	}
-
-	public MemberController(Scanner sc, List<Member> members) {
-		this.sc = sc;
-		this.members = members;
-	}
 	
-	public void doJoin() {
+	private void doJoin() {
 		int id = members.size() + 1;
 		String loginId = null;
 		String regDate = Util.getNowDateStr();
