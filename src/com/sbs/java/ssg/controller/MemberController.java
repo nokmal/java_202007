@@ -12,7 +12,6 @@ public class MemberController extends Controller {
 	private List<Member> members;
 	private String command;
 	private String actionMethodName;
-	private Member loginedMember;
 
 	public MemberController(Scanner sc) {
 		this.sc = sc;
@@ -47,11 +46,6 @@ public class MemberController extends Controller {
 			break;
 		}
 	}
-
-	private boolean isLogined() {
-		return loginedMember != null;
-	}
-
 
 	private void doLogin() {
 		if ( isLogined() == true ) {
