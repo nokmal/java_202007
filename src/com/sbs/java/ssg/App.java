@@ -55,6 +55,34 @@ public class App {
 			else if ( controllerName.equals("member")) {
 				controller = memberController;
 			}
+			else {
+				System.out.println("존재하지 않는 명령어입니다.");
+				continue;
+			}
+
+			String actionName = controllerName + "/" + actionMethodName;
+			
+			switch (actionName) {
+			case "article/write":
+			case "article/delete":
+			case "article/modify":
+			case "member/logout":
+				if ( Controller.isLogined() == false ) {
+					System.out.println("로그인 후 이용해주세요.");
+					continue;
+				}
+				break;
+			}
+			
+			switch (actionName) {
+			case "member/login":
+			case "member/join":
+				if ( Controller.isLogined() ) {
+					System.out.println("로그아웃 후 이용해주세요.");
+					continue;
+				}
+				break;
+			}
 			
 			controller.doAction(command, actionMethodName);
 			
