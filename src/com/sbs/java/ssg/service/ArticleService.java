@@ -12,6 +12,7 @@ public class ArticleService {
 	
 	public ArticleService() {
 		this.articleDao = Container.articleDao;
+		
 	}
 	public List<Article> getForPrintArticles(String searchKeyword) {
 		return articleDao.getArticles(searchKeyword);

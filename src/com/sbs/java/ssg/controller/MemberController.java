@@ -5,20 +5,21 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.sbs.java.ssg.container.Container;
+import com.sbs.java.ssg.dao.MemberDao;
 import com.sbs.java.ssg.dto.Article;
 import com.sbs.java.ssg.dto.Member;
+import com.sbs.java.ssg.service.MemberService;
 import com.sbs.java.ssg.util.Util;
 
 public class MemberController extends Controller {
 	private Scanner sc;
-	private List<Member> members;
 	private String command;
 	private String actionMethodName;
+	private MemberService memberService;
 
 	public MemberController(Scanner sc) {
 		this.sc = sc;
-		
-		members = Container.memberDao.members;
+		memberService = Container.memberService;
 	}
 	
 	public void makeTestData() {
@@ -52,7 +53,7 @@ public class MemberController extends Controller {
 		System.out.printf("로그인 아이디: ");
 		String loginId = sc.nextLine();
 		
-		Member member = getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if ( member == null ) {
 			System.out.println("해당 회원은 존재하지 않습니다.");
@@ -116,39 +117,19 @@ public class MemberController extends Controller {
 		String name = sc.nextLine();
 		
 		Member member = new Member(id, regDate, loginId, loginPw, name);
-		Container.memberDao.add(member);
+		memberService.join(member);
 		
 		loginedMember = member;
 		
 		System.out.printf("%s님이 가입하였습니다.\n", name);
 	}
 
-	private Member getMemberByLoginId(String loginId) {
-		int index = getMemberIndexByLoginId(loginId);
-		
-		if (index == -1) {
-			return null;
-		}
-		return members.get(index);
-	}
-
 	private boolean alreadyJoinLoginId(String loginId) {
-		int index = getMemberIndexByLoginId(loginId);
+		int index = memberService.getMemberIndexByLoginId(loginId);
 		if (index == -1) {
 			return true;
 		}
 		return false;
-	}
-
-	private int getMemberIndexByLoginId(String loginId) {
-		int i = 0;
-		for (Member member : members) {
-			if (member.loginId.equals(loginId)) {
-				return i;
-			}
-			i++;
-		}
-		return -1;
 	}
 }
 
